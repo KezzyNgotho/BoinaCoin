@@ -1,0 +1,497 @@
+/* src/LandingScreen.css */
+
+/* General styles */
+.landing-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f4f0f1, #eeeaee);
+  color: #000;
+  text-align: center;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.logo-image {
+  width: 250px; /* Adjust the width as needed */
+}
+
+.header-content {
+  flex: 2;
+}
+
+.header h1 {
+  margin-bottom: 10px;
+}
+
+.cta-button {
+  background-color: #620423;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 25px;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #e32383;
+}
+
+.main-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Meme section */
+.meme-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  width: 80%;
+}
+
+.text-content {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.text-content h1 {
+  font-size: 24px;
+  color: #620423;
+  margin-bottom: 10px;
+}
+
+.text-content p {
+  font-size: 18px;
+  color: #620423;
+  margin-bottom: 20px;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+}
+
+.social-icon {
+  margin-right: 10px;
+  color: #620423;
+  width: 50px;
+  height: 50px;
+}
+
+.social-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.meme-image {
+  flex: 1;
+  max-width: 50%; /* Adjust image width as needed */
+  height: auto;
+  border-radius: 15px;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.animate-in {
+  animation-name: slideIn;
+}
+
+.animate-out {
+  animation-name: slideOut;
+}
+
+
+.text-content h1 {
+  font-size: 24px;
+  color: #620423;
+  margin-bottom: 10px;
+}
+
+.text-content p {
+  font-size: 18px;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon {
+  margin-right: 10px;
+  color: #620423;
+  width: 50px;
+  height: 50px;
+}
+
+.social-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.social-icon img {
+  width: 50px;
+  height: 50px;
+}
+
+.meme-image {
+  flex: 1;
+  max-width: 50%;
+  height: auto;
+  border-radius: 15px;
+  animation-duration: 1s;
+  animation-fill-mode: boh;
+  max-width: 300px;
+}
+
+
+/* Features section */
+.features-section {
+  margin: 40px 0;
+}
+
+.features-section h2 {
+  font-size: 32px;
+  color: #620423;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.features-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.features-list li {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.feature-icon-container {
+  margin-bottom: 10px;
+}
+
+.feature-icon {
+  width: 50px; /* Adjust icon width */
+  height: 50px; /* Adjust icon height */
+}
+
+.feature-text {
+  font-size: 18px;
+  color: #000;
+  line-height: 1.5;
+}
+
+
+
+
+.features-list li:hover {
+  transform: translateY(-5px);
+}
+
+.feature-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+
+.feature-icon {
+  width: 50px;
+  height: 50px;
+  color: #fff;
+}
+
+.feature-text {
+  font-size: 18px;
+  color: #000;
+  line-height: 1.5;
+}
+
+/* Tokenomics section */
+.tokenomics-section {
+  margin: 40px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tokenomics-section h2 {
+  font-size: 32px;
+  color: #620423;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.tokenomics-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.tokenomics-item {
+  flex: 1;
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 0 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.tokenomics-item::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  height: 2px;
+  width: 10px;
+  background-color: #ccc;
+  animation: connectorAnimation 1s infinite alternate;
+}
+
+.tokenomics-item:first-child::before {
+  display: none;
+}
+
+@keyframes connectorAnimation {
+  0% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0.7);
+  }
+}
+/* src/styles/LandingPage.scss */
+
+
+// src/styles/LandingPage.scss
+
+
+    .tokenomics-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      h2 {
+        margin-bottom: 1rem;
+      }
+      .tokenomics-row {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        .tokenomics-column {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin: 0 1rem;
+        }
+        .tokenomics-item {
+          margin-bottom: 1rem;
+          h3 {
+            margin-bottom: 0.5rem;
+          }
+          ul {
+            list-style-type: none;
+            padding: 0;
+          }
+        }
+      }
+    }
+
+
+    // src/styles/LandingPage.scss
+
+.roadmap-section {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .roadmap-content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 80%;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      height: calc(100% - 4rem);
+      border-left: 2px dashed #007bff;
+    }
+
+    .roadmap-item {
+      width: calc(100% / 4);
+      padding: 2rem;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        background-color: #007bff;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+      }
+
+      &:first-child:before,
+      &:nth-child(2):before,
+      &:nth-child(3):before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        height: 2px;
+        background-color: #007bff;
+        width: calc(100% - 2rem);
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        font-size: 1rem;
+        margin: 0;
+      }
+    }
+  }
+}
+
+
+
+  
+  .footer {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+  }
+
+
+
+/* Team section */
+.team-section {
+  margin: 40px 0;
+}
+
+.team-section h2 {
+  font-size: 32px;
+  color: #000;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.team-members {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-button {
+  margin: 0 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: center;
+  color: #620423;
+  width: 180px;
+}
+
+.social-button:focus {
+  outline: none;
+  width: 80px;
+}
+
+.social-button p {
+  font-size: 18px;
+  color: #000;
+  margin-top: 5px;
+}
+
+.social-button:hover p {
+  text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+  background-color: #f0f0f0;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+/* End of src/LandingScreen.css */
