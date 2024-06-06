@@ -1,150 +1,194 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import '../index.scss'; // Add your CSS file for styling
+import '../fonts/font.css';
+import log from '../assets/log.png'; // Replace with your Boina Coin logo image
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTwitter, faDiscord, faTelegram, faTiktok, faAirbnb } from '@fortawesome/free-brands-svg-icons';
-import rocketImage from '../assets/lol.png';
-import lockImage from '../assets/lol.png';
-import smileImage from '../assets/lol.png';
-import diamondImage from '../assets/lol.png';
-import logoImage from '../assets/log.png';
-import lol from '../assets/lol-removebg-preview.png';
-import '../styles/LandingPage.scss';
-import TokenomicsChart from '../components/TokenomicsChart';
-const LandingScreen = () => {
-  const [isAnimated, setIsAnimated] = useState(false);
+import { faTelegram, faTwitter, faDiscord, faAmazon } from '@fortawesome/free-brands-svg-icons';
+import heroImage from '../assets/boina-removebg-preview.png';
+import openchatLogo from '../assets/openchat-removebg-preview.png'; // Replace with your OpenChat logo image
+import { useNavigate } from 'react-router-dom';
 
-  const handleAnimation = () => {
-    setIsAnimated(!isAnimated);
+const LandingPage = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+  const [walletConnected, setWalletConnected] = useState(false);
+  const [principal, setPrincipal] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [transactionResult, setTransactionResult] = useState(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkWalletConnection = async () => {
+      const isConnected = await window.ic?.plug?.isConnected();
+      setWalletConnected(isConnected);
+      if (isConnected) {
+        const principalId = await window.ic.plug.getPrincipal();
+        setPrincipal(principalId.toText());
+      }
+    };
+
+    checkWalletConnection();
+   /*  checkPlugWallet(); */
+  }, []);
+  const connectWallet = async () => {
+    try {
+      if (window.ic && window.ic.plug) { // Check for library availability
+        const connected = await identity.connect(); // Use useIdentity hook
+        if (connected) {
+          setWalletConnected(true);
+          const principalId = await identity.getPrincipal();
+          setPrincipal(principalId.toString());
+        } else {
+          console.warn('User declined wallet connection');
+        }
+      } else {
+        console.error('IC Plug not available');
+        window.alert ('kindly install plug wallet')
+        // Display error message to user (optional)
+      }
+    } catch (error ) {
+      window.alert ('kindly install plug wallet')
+      console.error('Failed to connect wallet:', error);
+     
+    }
+  };
+  
+
+  const handleBuyNow = async () => {
+    if (!walletConnected) {
+      await connectWallet();
+    }
+
+    if (principal) {
+      try {
+        const result = await window.ic.plug.requestTransfer({
+          to: canisterId,
+          amount: 1000000, // Example amount in e8s (equivalent to 1 token)
+        });
+        console.log('Transaction successful:', result);
+        setTransactionResult(result);
+        setModalIsOpen(true);
+      } catch (error) {
+        console.error('Transaction failed:', error);
+      }
+    }
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setTransactionResult(null);
   };
 
   return (
-    <div className="landing-screen">
-      <header className="header">
-        <div className="logo">
-          <img src={logoImage} alt="Boina Coin Logo" className="logo-image" />
+    <div className="landing-page min-h-screen flex flex-col bg-blue-100">
+      {/* Header */}
+      <header className="navbar px-4 py-2 bg-blue-200 rounded-lg shadow-md">
+        <div className="header-logo rounded-full bg-orange-500 flex items-center justify-center">
+          <img src={log} alt="Boina Coin" className="w-14 h-14 rounded-full border-2 border-white" />
         </div>
-        <div className="header-content">
-          <h1>Welcome to Boina Coin</h1>
-          <p>The memeCoin that's taking the internet by storm!</p>
-          <button className="cta-button" onClick={handleAnimation}>Join the Hype</button>
+        {/* Hamburger Menu */}
+        <div className="hamburger" onClick={toggleMenu}>
+          <div className="w-6 h-1 bg-black mb-1 rounded"></div>
+          <div className="w-6 h-1 bg-black mb-1 rounded"></div>
+          <div className="w-6 h-1 bg-black rounded"></div>
         </div>
-      </header>
-      <main className="main-content">
-      <section className={`meme-section ${isAnimated ? 'animate-out' : 'animate-in'}`}>
-  <div className="text-content">
-  <h1>Welcome to BoinaCoin Community</h1>
-  <p>The memeCoin that's taking the internet by storm!</p>
-  <p>Discover the world of Boina Coin, where fast transactions, community engagement, and fun come together. 
-    Join our growing community and be a part of the next big thing in the crypto world!</p>
-    <div className="social-icons">
-      <a href="#" className="social-icon"><FontAwesomeIcon icon={faTwitter} /></a>
-      <a href="#" className="social-icon"><FontAwesomeIcon icon={faDiscord} /></a>
-      <a href="#" className="social-icon"><FontAwesomeIcon icon={faTelegram} /></a>
-      <a href="#" className="social-icon"><FontAwesomeIcon icon={faTiktok} /></a>
-      <a href="#" className="social-icon"><FontAwesomeIcon icon={faAirbnb} /></a>
-    </div>
-  </div>
-  <img src={lol} alt="Boina Coin Meme" className="meme-image" />
-</section>
-
-        <section className="features-section">
-          <h2>Why Boina Coin?</h2>
-          <ul className="features-list">
-            <li>
-              <div className="feature-icon-container"><img src={rocketImage} alt="Fast Transactions" className="feature-icon" /></div>
-              <span className="feature-text">Fast Transactions - Experience lightning-fast transactions that complete in seconds, ensuring you don't miss out on any opportunities.</span>
+        {/* Navigation */}
+        <nav className={`nav-links ${menuOpen ? 'active' : ''}`}>
+          <ul className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
+            <li className="inline-block">
+              <a href="/" className="font-cursive text-black hover:text-blue-800 font-bold">HOME</a>
             </li>
-            <li>
-              <div className="feature-icon-container"><img src={diamondImage} alt="Community Driven" className="feature-icon" /></div>
-              <span className="feature-text">Community Driven - Join a vibrant and passionate community of enthusiasts and influencers, where your voice matters.</span>
+            <li className="inline-block">
+              <a href="About" className="font-cursive text-black hover:text-blue-800 font-bold">ABOUT</a>
             </li>
-            <li>
-              <div className="feature-icon-container"><img src={lockImage} alt="Secure & Reliable" className="feature-icon" /></div>
-              <span className="feature-text">Secure & Reliable - Rest assured with our robust and secure blockchain technology, providing peace of mind for your transactions.</span>
+            <li className="inline-block">
+              <a href="Buy" className="font-cursive text-black hover:text-blue-600 font-bold">HOW TO BUY</a>
             </li>
-            <li>
-              <div className="feature-icon-container"><img src={smileImage} alt="Fun & Engaging" className="feature-icon" /></div>
-              <span className="feature-text">Fun & Engaging - Participate in exciting events, challenges, and community activities to keep the fun going and create lasting memories.</span>
+            <li className="inline-block">
+              <a href="Tokenomics" className="font-alte-schwabacher text-black hover:text-blue-600 font-bold">TOKENOMICS</a>
+            </li>
+            <li className="inline-block">
+              <a href="Roadmap" className="font-calibrated text-black hover:text-orange-600 font-bold">ROADMAP</a>
+            </li>
+            <li className="inline-block">
+              <a href="#foodies" className="font-calibrated text-black hover:text-blue-600 font-bold">FOODIES</a>
             </li>
           </ul>
-        </section>
-        <section className="tokenomics-section">
-          <h2>Tokenomics</h2>
-          <div className="tokenomics-row">
-            <div className="tokenomics-column">
-              <TokenomicsChart />
-            </div>
-            <div className="tokenomics-column">
-              <div className="tokenomics-item">
-                <h3>Total Supply</h3>
-                <p>1,000,000,000 BOINA</p>
-              </div>
-              <div className="tokenomics-item">
-                <h3>Distribution</h3>
-                <ul>
-                  <li>50% - Community</li>
-                  <li>20% - Team</li>
-                  <li>15% - Marketing</li>
-                  <li>10% - Liquidity</li>
-                  <li>5% - Development</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-
-
-        <section className="roadmap-section">
-          <h2>Roadmap</h2>
-          <div className="roadmap-content">
-            <div className="roadmap-item">
-              <h3>Q1 2024: Launch and Airdrop</h3>
-              <p>Kick off Boina Coin with a grand launch and exciting airdrop events to attract initial users and create a buzz in the community.</p>
-            </div>
-            <div className="roadmap-item">
-              <h3>Q2 2024: Exchange Listings</h3>
-              <p>Get Boina Coin listed on major cryptocurrency exchanges, making it accessible to a wider audience and enhancing liquidity.</p>
-            </div>
-            <div className="roadmap-item">
-              <h3>Q3 2024: Partnership Announcements</h3>
-              <p>Form strategic partnerships with key players in the industry to expand our ecosystem and bring more value to our community.</p>
-            </div>
-            <div className="roadmap-item">
-              <h3>Q4 2024: Community Events and Giveaways</h3>
-              <p>Engage with our community through fun events and generous giveaways, fostering a strong and loyal user base.</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="team-section">
-        <h2>Our Socials</h2>
-        <div className="team-members">
-          <a href="https://twitter.com/YourTwitterHandle" className="social-button">
+        </nav>
+        {/* Social icons */}
+        <div className="social-icons flex space-x-4">
+          <a href="https://t.me/BoinaCoin" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center hover:bg-blue-600">
+            <FontAwesomeIcon icon={faTelegram} size="lg" />
+          </a>
+          <a href="https://x.com/BoinaCoin" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-gray-800">
             <FontAwesomeIcon icon={faTwitter} />
-            <p>X</p>
           </a>
-          <a href="https://discord.gg/YourDiscordServer" className="social-button">
+          <a href="https://openchat.xyz/yourOpenChatLink" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center hover:bg-blue-500">
+            <img src={openchatLogo} alt="OpenChat Logo" className="w-8 h-8" />
+          </a>
+          <a href="https://discord.com/invite/yourDiscordLink" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center hover:bg-purple-700">
             <FontAwesomeIcon icon={faDiscord} />
-            <p>Discord</p>
-          </a>
-          <a href="https://t.me/YourTelegramHandle" className="social-button">
-            <FontAwesomeIcon icon={faTelegram} />
-            <p>Telegram</p>
-          </a>
-          <a href="https://t.me/YourTelegramHandle" className="social-button">
-            <FontAwesomeIcon icon={faTelegram} />
-            <p>OpenChat</p>
           </a>
         </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="flex flex-col lg:flex-row items-center justify-center px-4 py-16 bg-blue-100">
+        <div className="w-full lg:w-1/2 lg:pr-8 text-center lg:text-left">
+          <h1 className="text-5xl font-bold mb-4 text-blue-400 hero-text">
+            Welcome to Boina Coin
+          </h1>
+          <p className="text-lg text-black font-bold">
+            Discover the future of cryptocurrency. Join us on this exciting journey!
+          </p>
+          <p className="text-lg text-purple-800 font-bold">
+            Let's unite all the foodies!
+          </p>
+          <p className="text-lg text-pink-400 font-bold">
+            Join the hype and be part of the Boina Coin community.
+          </p>
+          <div className="flex justify-center lg:justify-start mt-8 space-x-4">
+          <button onClick={() => window.open("https://t.me/BoinaCoin", "_blank")} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full">
+  Community
+</button>
+
+            <button 
+               onClick={handleBuyNow}
+            className="buy-button bg-purple-900 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full">
+              Buy Now
+            </button>
+          </div>
+          <div className="flex items-center justify-center lg:justify-start mt-4">
+            <span className="animate-bounce text-3xl">🚀</span>
+          </div>
+        </div>
+        <div className="w-full lg:w-1/4 flex items-center justify-center bg-transparent hero-image">
+          <img src={heroImage} alt="Boina Coin Hero" className="rounded-lg shadow-lg" />
+        </div>
       </section>
-      </main>
-      <footer className="footer">
-        <p>© 2024 Boina Coin. All rights reserved.</p>
+
+      {/* Footer */}
+      <footer className="bg-gray-200 text-black py-4 mt-auto">
+        <div className="container mx-auto flex justify-between items-center">
+          <p className="text-sm text-black-400">
+            © 2024 BoinaCoin. All rights reserved.
+          </p>
+          <p className="text-sm text-black-400">
+            Contact us: <a href="mailto:info@boinacoin.com">info@boinacoin.com</a>
+          </p>
+          <button
+             onClick={handleBuyNow}
+           className="buy-button bg-purple-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full">
+            Buy Now
+          </button>
+        </div>
       </footer>
     </div>
   );
 };
 
-export default LandingScreen;
-
-      
+export default LandingPage;
