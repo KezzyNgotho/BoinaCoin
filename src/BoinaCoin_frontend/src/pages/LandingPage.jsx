@@ -115,7 +115,7 @@ const LandingPage = () => {
               <a href="Roadmap" className="font-calibrated text-black hover:text-orange-600 font-bold">ROADMAP</a>
             </li>
             <li className="inline-block">
-              <a href="#foodies" className="font-calibrated text-black hover:text-blue-600 font-bold">FOODIES</a>
+              <a href="Whitepaper" className="font-calibrated text-black hover:text-blue-600 font-bold">WHITEPAPER</a>
             </li>
           </ul>
         </nav>

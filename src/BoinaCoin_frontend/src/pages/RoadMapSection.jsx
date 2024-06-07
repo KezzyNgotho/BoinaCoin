@@ -21,20 +21,6 @@ const RoadMapSection = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [transactionResult, setTransactionResult] = useState(null);
 
- /*  const checkPlugWallet = async () => {
-    const publicKey = window.ic.plug.requestConnect();
-
-    console.log(publicKey) 
-    
-    if (publicKey == undefined) {
-    setWalletPresent(false)
-    } else {
-    setWalletPresent(true)
-    }
-    }; */
-
-
-
 
   const navigate = useNavigate();
 
@@ -52,18 +38,7 @@ const RoadMapSection = () => {
    /*  checkPlugWallet(); */
   }, []);
 
- /*  const connectWallet = async () => {
-    try {
-      const connected = await window.ic.plug.requestConnect();
-      setWalletConnected(connected);
-      if (connected) {
-        const principalId = await window.ic.plug.getPrincipal();
-        setPrincipal(principalId.toText());
-      }
-    } catch (error) {
-      console.error('Failed to connect wallet:', error);
-    }
-  }; */ 
+ 
   const connectWallet = async () => {
     try {
       if (window.ic && window.ic.plug) { // Check for library availability

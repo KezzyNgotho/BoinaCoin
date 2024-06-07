@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "setup": "npm run build:css && react-scripts start npm i && dfx canister create BoinaCoin_backend && dfx generate BoinaCoin_backend && dfx deploy",
-    "start": "vite --port 3000",
+  
+    "start": "react-scripts start",
     "prebuild": "dfx generate",
-    "build": "npm run build:css && react-scripts build tsc && vite build",
+    "build": " npm run build:css && vite build",
     "build:css": "postcss src/styles/tailwind.scss -o src/styles/index.scss",
     "format": "prettier --write \"src/**/*.{json,js,jsx,ts,tsx,css,scss}\""
   },

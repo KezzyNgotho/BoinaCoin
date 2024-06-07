@@ -5,7 +5,7 @@ import AboutSection from './pages/AboutSection';
 import TokenomicsSection from './pages/TokenomicsSection';
 import HowToBuySection from './pages/HowToBuySection';
 import Roadmap from './pages/RoadMapSection';
-import Dashboard from './pages/Dashboard';
+import Whitepaper from './components/WhitePaper';
 
 
 export default function App() {
@@ -18,7 +18,7 @@ export default function App() {
           <Route path="Tokenomics" element={<TokenomicsSection />} />
           <Route path="Buy" element={<HowToBuySection />} />
           <Route path="Roadmap" element={<Roadmap />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="whitepaper" element={<Whitepaper />} />
         </Routes>
       </div>
     </Router>
